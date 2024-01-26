@@ -1,38 +1,217 @@
-.App {
-  text-align: center;
+body {
+    background-color: black;
+    color: lightgray;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+ul.navigation {
+  background-color: #111;
+  padding: 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.content {
+    padding: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ul.navigation li a {
+  color: #FFF;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  display: inline-block;
 }
 
-.App-link {
-  color: #61dafb;
+ul.navigation li :hover {
+    background-color: darkgray;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.login {
+    display: flex;
+    flex-direction: column;
+}
+
+.login form {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login form div {
+    padding: 10px;
+}
+
+.login button {
+    width: 10%;
+}
+
+.button,
+.cmd {
+    box-sizing: border-box;
+    color: #FFF;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-block;
+    background-color: rgb(27, 25, 25);
+}
+
+li.form .cmd {
+    width: 80%;
+}
+
+.button:hover {
+    background-color: darkgray;
+}
+
+.console-container {
+    display: flex;
+    height: 80vh;
+    width: 100vh;
+    flex-direction: column;
+    background: black;
+    color: lightgray;
+}
+
+.console {
+    flex: 1;
+    height: 50%;
+    overflow: auto;
+    /* border: 1px solid #ccc; */
+    margin-left: 10px;
+}
+
+.console pre {
+    margin-left: 10px;
+}
+
+ul.navigation, ul.console-list, ul.control-buttons {
+    display: flex;
+    flex-direction: row;
+    list-style-type: none;
+}
+
+ul.control-buttons li {
+    width: 50%;
+}
+
+ul.control-buttons li .button {
+    width: 80%;
+    height: 150%;
+}
+
+li {
+    flex: 0 0 auto;
+}
+
+li.checkbox {
+    font-weight: bold;
+    align-self: center;
+    width: 20%;
+}
+
+li.form {
+    box-sizing: border-box;
+    width: 80%;
+}
+
+li.form .cmd {
+    width: 80%;
+}
+
+label {
+    padding-right: 15px;
+}
+
+.downloads {
+    display: flex;
+    flex-direction: column;
+    width: 40vh;
+}
+
+.downloadable a:link {
+    color: darkgrey;
+}
+
+.downloadable a:link:hover {
+    color: white;
+    font-weight:bold;
+}
+
+li.downloadable {
+    padding: 10px;
+    border-style:double;
+}
+
+.server-bar {
+    display: flex;
+    flex-direction: row;
+    width: 80vh;
+    border-style: groove;
+    border-radius: 15px;
+    color: white;
+}
+
+.briefing {
+    text-shadow: 0px 0px 4px rgb(255, 255, 255, 0.7);
+    padding: 10px;
+    flex-basis: auto;
+}
+
+.briefing table {
+    border-color: rgb(16, 16, 16);
+    border-radius: 5px;
+    border-style:initial;
+    background-color: rgb(16, 16, 16);
+    padding: 10px;
+}
+
+.levelshot img {
+    width: 100%;
+    height: auto;
+}
+
+.levelshot {
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+}
+
+.levelshot:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at center, rgba(255,255,255,0) 0%,rgb(0, 0, 0) 70%,rgb(0, 0, 0) 100%);
+    position: absolute;
+    top: 0; left: 0;
+}
+
+.q3-red {
+    color: red;
+}
+
+.q3-green {
+    color: green;
+}
+
+.q3-yellow {
+    color: yellow;
+}
+
+.q3-blue {
+    color: blue;
+}
+
+.q3-cyan {
+    color: cyan;
+}
+
+.q3-pink {
+    color: pink;
+}
+
+.q3-white {
+    color: white;
+}
+
+.q3-black {
+    color: darkgrey;
 }

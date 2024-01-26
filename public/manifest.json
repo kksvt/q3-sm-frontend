@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Q3 SM",
+  "name": "Quake 3 Engine Server Manager",
   "icons": [
     {
       "src": "favicon.ico",
