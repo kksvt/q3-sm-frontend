@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { Route, Routes, NavLink, BrowserRouter } from "react-router-dom";
+import { Route, Routes, NavLink, HashRouter } from "react-router-dom";
 import { AppContext } from './context/AppContext';
 import Main from './components/Main';
 import ServerTracker from './components/ServerTracker';
@@ -60,7 +60,7 @@ function App() {
   }
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <h1>Q3 Server Manager</h1>
       <ul className='navigation'>
         <li><NavLink to='/' onClick={(e) => { sendGetstatus() }}>Main page</NavLink></li>
@@ -79,7 +79,7 @@ function App() {
           <Route path='/login' element={<Login/>} />
         </Routes>
       </div>
-    </BrowserRouter>
+    </HashRouter>
     );
 
 }
