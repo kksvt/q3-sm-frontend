@@ -79,8 +79,10 @@ const Login = () => {
                 return 'Logged in';
             case 'logged_out':
                 return 'Not logged in';
-            default:
+            case 'server_error':
                 return 'Server error';
+            default:
+                return 'Invalid username or password';
         }
     }
 

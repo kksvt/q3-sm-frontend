@@ -9,7 +9,6 @@ export const AppReducer = (state, action) => {
             state.statusResponse = action.payload.statusResponse;
             return {...state };
         case 'Q3_LOG_IN':
-            console.log('log in');
             if (state.loginStatus === 'logged_in') {
                 console.log('You are already logged in, ignoring...');
                 return state;
