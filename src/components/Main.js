@@ -10,7 +10,6 @@ const Main = () => {
     const getLevelshot = (levelshot) => {
         let img = null;
         try {
-            console.log(`../public/levelshots/${levelshot}.jpg`);
             img = require(`../../public/levelshots/${levelshot}.jpg`);
         } catch {
         } finally {

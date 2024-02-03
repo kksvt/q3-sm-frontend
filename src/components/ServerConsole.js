@@ -69,6 +69,9 @@ const ServerConsole = () => {
                 <li>
                     <button className='button' onClick={(e) => sendRequest(`${url}/admin/auth/quit`)}>Quit server</button>
                 </li>
+                <li>
+                    <button className='button' onClick={(e) => sendRequest(`${url}/admin/auth/sync`)}>Synchronize downloads</button>
+                </li>
             </ul>
             <h3>Server reponse: {serverResponse}</h3>
         </div>

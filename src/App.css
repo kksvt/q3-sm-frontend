@@ -89,7 +89,7 @@ ul.navigation, ul.console-list, ul.control-buttons {
 }
 
 ul.control-buttons li {
-    width: 50%;
+    flex: 1;
 }
 
 ul.control-buttons li .button {
