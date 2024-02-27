@@ -40,7 +40,7 @@ ul.navigation li :hover {
 }
 
 .login button {
-    width: 10%;
+    width: fit-content;
 }
 
 .button,
