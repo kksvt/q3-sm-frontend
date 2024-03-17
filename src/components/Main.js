@@ -30,7 +30,7 @@ const Main = () => {
 
     return (
         <div className='server-bar'>
-            <div className='levelshot'>{getLevelshot(statusResponse.mapname)}</div>
+            <div className='levelshot'>{getLevelshot(statusResponse.mapname.toLowerCase())}</div>
             <div className='briefing'>
                 <h2>Server info</h2>
                 <table>
@@ -52,8 +52,8 @@ const Main = () => {
                             <td>{ColorFormatter(statusResponse.mapname)}</td>
                         </tr>
                         <tr key={key++}>
-                            <td>Protocol</td>
-                            <td>{ColorFormatter(statusResponse.protocol)}</td>
+                            <td>Version</td>
+                            <td>{ColorFormatter(statusResponse.version)}</td>
                         </tr>
                         <tr key={key++}>
                             <td>Clients</td>
