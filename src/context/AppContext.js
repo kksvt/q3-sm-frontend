@@ -28,7 +28,13 @@ export const AppReducer = (state, action) => {
                     ws.onmessage = ((event) => {
                         let msg = event.data.toString();
                         state.wsMsgs.push(msg);
+                        if (state.wsMsgs.length > process.env.REACT_APP_MAX_MSG_HISTORY) {
+                            state.wsMsgs = state.wsMsgs.slice(process.env.REACT_APP_MAX_MSG_HISTORY / 2);
+                        }
                         if (wsConsoleRef && wsConsoleRef.current) {
+                            if (wsConsoleRef.current.textContent.length > process.env.REACT_APP_MAX_CONSOLE_LEN) {
+                                wsConsoleRef.current.textContent = wsConsoleRef.current.textContent.slice(process.env.REACT_APP_MAX_CONSOLE_LEN / 2);
+                            }
                             wsConsoleRef.current.textContent += msg;
                             if (wsCallbackRef) {
                                 wsCallbackRef();
