@@ -19,10 +19,6 @@ const Login = () => {
         }).then((res) => {
             if (res.data.message === 'auth_success') {
                 actionType = 'Q3_LOG_IN';
-                payload = {
-                    username: res.data.username,
-                    accessToken: res.data.accessToken,
-                };
             }
         }).catch((err) => {
             payload = {
@@ -30,7 +26,7 @@ const Login = () => {
             };
             console.log('Error: ' + err);
         }).finally(() => {
-            dispatch({type: actionType, payload: payload });
+            dispatch({type: actionType});
         });
     }
 

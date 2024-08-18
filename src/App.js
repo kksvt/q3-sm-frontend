@@ -14,25 +14,20 @@ function App() {
 
   useEffect(() => {
     let actionType = 'Q3_LOG_OUT';
-    let payload = {};
     axios.get(`${url}/admin/auth/check`, { 
       withCredentials: true,
     } )
     .then((res) => {
       if (res.data.message === 'auth_success') {
         actionType = 'Q3_LOG_IN';
-        payload = {
-          username: res.data.username,
-          accessToken: res.data.accessToken,
-      };
       }
     })
     .catch((err) => {
-      console.error('Session expired or does not exist');
+      console.error('Token has expired or does not exist');
       console.error(err)
     })
     .finally(() => {
-      dispatch({type: actionType, payload: payload});
+      dispatch({type: actionType});
     })
     sendGetstatus();
   }, []);

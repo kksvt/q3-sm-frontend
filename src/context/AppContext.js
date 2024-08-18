@@ -21,35 +21,37 @@ export const AppReducer = (state, action) => {
                 oldWs.close();
             }
             const ws = new WebSocket(process.env.REACT_APP_WS_ADDR);
-            ws.onmessage = (event) => {
-                const message = event.data.toString();
-                if (message === 'auth_request') {
-                    ws.send(`auth:${action.payload.username}\n${action.payload.accessToken}`);
-                    ws.onmessage = ((event) => {
-                        let msg = event.data.toString();
-                        state.wsMsgs.push(msg);
-                        if (state.wsMsgs.length > process.env.REACT_APP_MAX_MSG_HISTORY) {
-                            state.wsMsgs = state.wsMsgs.slice(process.env.REACT_APP_MAX_MSG_HISTORY / 4);
-                        }
-                        if (wsConsoleRef && wsConsoleRef.current) {
-                            if (wsConsoleRef.current.textContent.length > process.env.REACT_APP_MAX_CONSOLE_LEN) {
-                                wsConsoleRef.current.textContent = wsConsoleRef.current.textContent.slice(process.env.REACT_APP_MAX_CONSOLE_LEN / 4);
-                            }
-                            wsConsoleRef.current.textContent += msg;
-                            if (wsCallbackRef) {
-                                wsCallbackRef();
-                            }
-                        }
-                    });
-                    ws.onclose = ((event) => {
-                        if (wsConsoleRef && wsConsoleRef.current) {
-                            wsConsoleRef.current.textContent += '[You have been logged out]\n';
-                        }
-                        state.loginStatus = 'logged_out';
-                        window.location.reload();
-                    });
+            ws.onmessage = ((event) => {
+                let msg = event.data.toString();
+
+                if (msg.charAt(msg.length - 1) != '\n') {
+                    msg += '\n';
                 }
-            }
+
+                state.wsMsgs.push(msg);
+                if (state.wsMsgs.length > process.env.REACT_APP_MAX_MSG_HISTORY) {
+                    state.wsMsgs = state.wsMsgs.slice(process.env.REACT_APP_MAX_MSG_HISTORY / 4);
+                }
+                if (wsConsoleRef && wsConsoleRef.current) {
+                    if (wsConsoleRef.current.textContent.length > process.env.REACT_APP_MAX_CONSOLE_LEN) {
+                        wsConsoleRef.current.textContent = wsConsoleRef.current.textContent.slice(process.env.REACT_APP_MAX_CONSOLE_LEN / 4);
+                    }
+                    wsConsoleRef.current.textContent += msg;
+                    if (wsCallbackRef) {
+                        wsCallbackRef();
+                    }
+                }
+            });
+
+            ws.onclose = ((event) => {
+                console.log(event);
+                if (wsConsoleRef && wsConsoleRef.current) {
+                    wsConsoleRef.current.textContent += '[You have been logged out]\n';
+                }
+                state.loginStatus = 'logged_out';
+                window.location.reload();
+            });
+
             state.ws = ws;
             return {...state};
         case 'Q3_LOG_OUT':

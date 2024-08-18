@@ -40,6 +40,12 @@ const ServerConsole = () => {
         }).catch((err) => {
             console.error(err);
             setServerResponse(err.response.data.message);
+            //the token has expired. reload the page
+            if (err.response.data.status === 403 ||
+                err.response.data.status === 401
+            ) {
+                window.location.reload();
+            }
         });
     }
 
