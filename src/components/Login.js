@@ -26,7 +26,7 @@ const Login = () => {
             };
             console.log('Error: ' + err);
         }).finally(() => {
-            dispatch({type: actionType});
+            dispatch({type: actionType, payload: payload});
         });
     }
 

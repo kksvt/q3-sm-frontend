@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 
-let wsConsoleRef = null;
 let wsCallbackRef = null;
+let wsMsgs = [];
 
 export const AppReducer = (state, action) => {
     switch (action.type) {
@@ -22,32 +22,36 @@ export const AppReducer = (state, action) => {
             }
             const ws = new WebSocket(process.env.REACT_APP_WS_ADDR);
             ws.onmessage = ((event) => {
-                let msg = event.data.toString();
-
-                if (msg.charAt(msg.length - 1) != '\n') {
-                    msg += '\n';
-                }
-
-                state.wsMsgs.push(msg);
-                if (state.wsMsgs.length > process.env.REACT_APP_MAX_MSG_HISTORY) {
-                    state.wsMsgs = state.wsMsgs.slice(process.env.REACT_APP_MAX_MSG_HISTORY / 4);
-                }
-                if (wsConsoleRef && wsConsoleRef.current) {
-                    if (wsConsoleRef.current.textContent.length > process.env.REACT_APP_MAX_CONSOLE_LEN) {
-                        wsConsoleRef.current.textContent = wsConsoleRef.current.textContent.slice(process.env.REACT_APP_MAX_CONSOLE_LEN / 4);
+                const msg = event.data.toString();
+                const split = msg.split('\n');
+                let modified = false;
+                split.forEach(line => {
+                    if (!line.length)
+                        return;
+                    if (line.length === 1 && line.charAt(0) === '\r')
+                        return;
+                    if (line.charAt(line.length - 1) !== '\n') {
+                        wsMsgs.push(line + '\n');
                     }
-                    wsConsoleRef.current.textContent += msg;
+                    else {
+                        wsMsgs.push(line);
+                    }
+                    modified = true;
+                });
+
+                if (modified) {
+                    if (wsMsgs.length > state.msgHistoryMax) {
+                        wsMsgs = wsMsgs.slice(state.msgHistoryMax / 4);
+                    }
+
                     if (wsCallbackRef) {
-                        wsCallbackRef();
+                        wsCallbackRef(wsMsgs);
                     }
                 }
             });
 
             ws.onclose = ((event) => {
                 console.log(event);
-                if (wsConsoleRef && wsConsoleRef.current) {
-                    wsConsoleRef.current.textContent += '[You have been logged out]\n';
-                }
                 state.loginStatus = 'logged_out';
                 window.location.reload();
             });
@@ -66,8 +70,10 @@ export const AppReducer = (state, action) => {
             }
             return { ...state};
         case 'Q3_SET_OUTPUT':
-            wsConsoleRef = action.payload.ref;
             wsCallbackRef = action.payload.callback;
+            if (wsCallbackRef && wsMsgs.length) {
+                wsCallbackRef(wsMsgs);
+            }
             return state;
         default:
             return state;
@@ -78,10 +84,10 @@ const initialState = {
     url: process.env.REACT_APP_API_URL,
     ip: process.env.REACT_APP_SERV_IP,
     port: process.env.REACT_APP_SERV_PORT,
+    msgHistoryMax: process.env.REACT_APP_MAX_MSG_HISTORY,
     statusResponse: null,
     loginStatus: 'logged_out',
     ws: null,
-    wsMsgs: [],
 };
 
 export const AppContext = createContext();
@@ -98,9 +104,7 @@ export const AppProvider = (props) => {
                 statusResponse: state.statusResponse,
                 ws: state.ws,
                 loginStatus: state.loginStatus,
-                wsMsgs: state.wsMsgs,
-                wsRef: wsConsoleRef,
-                wsCallbackRef,
+                msgHistoryMax: state.msgHistoryMax,
                 dispatch
             }}
             >

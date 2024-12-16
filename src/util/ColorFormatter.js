@@ -5,7 +5,7 @@ const ColorFormatter = (text) => {
 
     for (let i = 0; i < text.length; ++i) {
         if (i + 1 < text.length) {
-            if (text[i] == '^' && (text[i + 1] >= '0' && text[i + 1] <= '9')) {
+            if (text[i] === '^' && (text[i + 1] >= '0' && text[i + 1] <= '9')) {
                 if (currentSection !== '') {
                     sections.push({section: currentSection, color: currentColor});
                     currentSection = '';
@@ -17,7 +17,7 @@ const ColorFormatter = (text) => {
         }
         currentSection += text[i];
     }
-    if (currentSection != '') {
+    if (currentSection !== '') {
         sections.push({section: currentSection, color: currentColor});
     }
 
@@ -44,13 +44,13 @@ const ColorFormatter = (text) => {
         }
     }
 
-    return (
-        <div>
+     return (
+        <span>
             {sections.map((section) => {
                 return surroundWithColor(section.section, section.color);
             })}
-        </div>
-    );
+        </span>
+    ); 
 };
 
 export default ColorFormatter;

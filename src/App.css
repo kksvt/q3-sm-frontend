@@ -24,23 +24,17 @@ ul.navigation li :hover {
     background-color: darkgray;
 }
 
-.login {
+.login-data {
     display: flex;
-    flex-direction: column;
+    align-items: center;
 }
 
-.login form {
-    width: 50%;
-    display: flex;
-    flex-direction: column;
+.login-data label {
+    width: 80px;
 }
 
 .login form div {
     padding: 10px;
-}
-
-.login button {
-    width: fit-content;
 }
 
 .button,
@@ -74,7 +68,6 @@ li.form .cmd {
     flex: 1;
     height: 50%;
     overflow: auto;
-    /* border: 1px solid #ccc; */
     margin-left: 10px;
 }
 
@@ -82,10 +75,15 @@ li.form .cmd {
     margin-left: 10px;
 }
 
-ul.navigation, ul.console-list, ul.control-buttons {
+ul.navigation,
+ul.console-list,
+ul.control-buttons {
     display: flex;
+    /*align-items: center;*/
     flex-direction: row;
     list-style-type: none;
+    margin: 0;
+    padding: 10px;
 }
 
 ul.control-buttons li {
@@ -117,7 +115,10 @@ li.form .cmd {
 }
 
 label {
+    min-width: 80px;
     padding-right: 15px;
+    text-align: left;
+    display: inline-block; 
 }
 
 .downloads {
@@ -145,7 +146,7 @@ li.downloadable {
     flex-direction: row;
     width: 80vh;
     border-style: groove;
-    border-radius: 15px;
+    border-radius: 5px;
     color: white;
 }
 
@@ -205,7 +206,7 @@ li.downloadable {
 }
 
 .q3-pink {
-    color: pink;
+    color: violet;
 }
 
 .q3-white {

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { AppContext } from '../context/AppContext';
 
 const Download = () => {
-    const [ downloads, setDownloads ] = useState([]);
+    const [ downloads, setDownloads ] = useState(null);
     const { url } = useContext(AppContext);
 
     useEffect(() => {
@@ -16,7 +16,10 @@ const Download = () => {
     }, []);
 
     const formatDownloads = () => {
-        if (downloads.length == 0) {
+        if (!downloads) {
+            return <h3>Loading downloads...</h3>;
+        }
+        if (!downloads.length) {
             return (<h3>No files are available.</h3>);
         }
         return (<ul>

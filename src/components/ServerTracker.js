@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
 import ColorFormatter from '../util/ColorFormatter';
 
-const ServerTracker = (props) => {
+const ServerTracker = () => {
     const { ip, port, statusResponse } = useContext(AppContext);
 
     const TrackerDetailed = () => {

@@ -24,7 +24,7 @@ const Main = () => {
         return <div>Querying server {ip}:{port}</div>;
     }
 
-    if (Object.entries(statusResponse).length == 0) {
+    if (!Object.entries(statusResponse).length) {
         return <div>Server {ip}:{port} is offline</div>;
     }
 

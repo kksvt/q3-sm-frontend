@@ -1,19 +1,29 @@
 import React, { useContext, useEffect, useState, useRef } from 'react';
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
+import ColorFormatter from '../util/ColorFormatter';
 
 const ServerConsole = () => {
-    const { dispatch, loginStatus, ws, wsMsgs, url } = useContext(AppContext);
+    const { dispatch, loginStatus, ws, url } = useContext(AppContext);
     const [ serverResponse, setServerResponse ] = useState('');
+    const [ parseColors, setParseColors ] = useState(false);
+    const [ messages, setMessages ] = useState([]);
     const outputRef = useRef(null);
     const inputRef = useRef(null);
     const consoleRef = useRef(null);
     const checkRef = useRef(null);
 
     useEffect(() => {
-        dispatch({type: 'Q3_SET_OUTPUT', payload: {ref: outputRef, callback: () => { scrollToBottom(); }}});
+        dispatch({type: 'Q3_SET_OUTPUT', payload: {
+            callback: (data) => { 
+                setMessages([...data]);
+            }
+     }});
+    }, [ loginStatus, parseColors ]);
+
+    useEffect(() => {
         scrollToBottom();
-    }, [ loginStatus ]);
+    }, [ messages ])
 
     const notLoggedIn = () => {
         return <h3>Log in to view this page</h3>
@@ -27,8 +37,9 @@ const ServerConsole = () => {
 
     const scrollToBottom = () => {
         if (consoleRef.current) {
-            if (checkRef.current.checked)
+            if (checkRef.current.checked) {
                 consoleRef.current.scrollTo(0, consoleRef.current.scrollHeight);
+            }
         }
     };
 
@@ -48,18 +59,32 @@ const ServerConsole = () => {
             }
         });
     }
+    
+    const msgRender = () => {
+        if (parseColors) {
+            return messages.map((line, index) => <span key={index}>{ColorFormatter(line)}</span>);
+        }
+
+        return messages.map((line, index) => <span key={index}>{line}</span>);
+    }
 
     const loggedIn = () => {
         return <div className='console-container'>
+            <ul className='console-list'>
+                <li className='checkbox'>
+                    <label htmlFor='colortext'>Colored</label>
+                    <input id='colortext' name='colortext' type='checkbox' onChange={e => setParseColors(e.target.checked)}></input>
+                </li>
+            </ul>
             <div ref={consoleRef} className='console'>
                 <pre ref={outputRef}>
-                    {wsMsgs.map((line, index) => <span key={index}>{line}</span>)}
+                    {msgRender()}
                 </pre>
-            </div>
+            </div>                       
             <ul className='console-list'>
                 <li className='checkbox'>
                     <label htmlFor='autoscroll'>Autoscroll</label>
-                    <input name='autoscroll' ref={checkRef} type='checkbox' defaultChecked='true'></input>
+                    <input id='autoscroll' name='autoscroll' ref={checkRef} type='checkbox' defaultChecked='true'></input>
                 </li>
                 <li className='form'>
                     <form onSubmit={sendCmd}>
@@ -85,7 +110,7 @@ const ServerConsole = () => {
 
     return (
     <div>
-        <h2>Server Console</h2>
+            <h2>Server Console</h2>
         {loginStatus === 'logged_in' ? loggedIn() : notLoggedIn()}
     </div>
     );
