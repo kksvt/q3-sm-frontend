@@ -3,6 +3,7 @@ import React, { createContext, useReducer } from 'react';
 let wsCallbackRef = null;
 let wsMsgs = [];
 
+//todo: refactor this. a lot of bad practices
 export const AppReducer = (state, action) => {
     switch (action.type) {
         case 'Q3_GETSTATUS_QUERY':

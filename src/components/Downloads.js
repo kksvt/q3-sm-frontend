@@ -24,7 +24,7 @@ const Download = () => {
         }
         return (<ul>
             {downloads.map((fileData, index) => {
-                return <li key={index} className='downloadable'><a href={`${url}/${fileData.name}`}>{fileData.name} ({fileData.size} MB)</a></li>}
+                return <li key={index} className='downloadable'><a href={`${url}/player/downloads/${fileData.name}`}>{fileData.name} ({fileData.size} MB)</a></li>}
             )}
         </ul>);
     }

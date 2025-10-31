@@ -6,7 +6,7 @@ import ColorFormatter from '../util/ColorFormatter';
 const ServerConsole = () => {
     const { dispatch, loginStatus, ws, url } = useContext(AppContext);
     const [ serverResponse, setServerResponse ] = useState('');
-    const [ parseColors, setParseColors ] = useState(false);
+    const [ parseColors, setParseColors ] = useState(true);
     const [ messages, setMessages ] = useState([]);
     const outputRef = useRef(null);
     const inputRef = useRef(null);
@@ -73,7 +73,7 @@ const ServerConsole = () => {
             <ul className='console-list'>
                 <li className='checkbox'>
                     <label htmlFor='colortext'>Colored</label>
-                    <input id='colortext' name='colortext' type='checkbox' onChange={e => setParseColors(e.target.checked)}></input>
+                    <input id='colortext' name='colortext' type='checkbox' onChange={e => setParseColors(e.target.checked)} defaultChecked='true'></input>
                 </li>
             </ul>
             <div ref={consoleRef} className='console'>
